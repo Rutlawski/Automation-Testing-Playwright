@@ -9,4 +9,4 @@
             - name: checkout repository
               uses: actions/checkout@v2
             - name: MESSAGE
-              uses: echo ALL YOUR BASE ARE BELONG TO US
+              run: echo ALL YOUR BASE ARE BELONG TO US
