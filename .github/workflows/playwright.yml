@@ -5,8 +5,16 @@
   jobs:
     playwrighttests:
         runs-on: ubuntu-latest
+        container: mcr.microsoft.com/playwright:v.1.40.1-focal
         steps:
             - name: checkout repository
               uses: actions/checkout@v2
-            - name: MESSAGE
-              run: echo ALL YOUR BASE ARE BELONG TO US
+            - name: Run the tests
+              run: 
+                echo "Start the application"
+                ./shopping-store-linux-amd64 &
+                echo "Install dependencies"
+                npm ci
+                echo "Run Playwright Tests"
+                npm run e2e:ci
+
