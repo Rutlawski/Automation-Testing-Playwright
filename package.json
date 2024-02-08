@@ -1,0 +1,24 @@
+{
+  "name": "playwright-course",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "e2e": "playwright test --headed"
+  },
+  "keywords": [
+    "e2e",
+    "automation",
+    "playwright",
+    "javascript"
+  ],
+  "author": "Marek Ostrowski",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.40.1"
+  },
+  "dependencies": {
+    "node-fetch": "^2.6.7",
+    "uuid": "^9.0.1"
+  }
+}
