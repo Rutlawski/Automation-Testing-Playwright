@@ -4,7 +4,7 @@
         branches: [ master ]
   jobs:
     playwrighttests:
-        runs-on: ubuntu-latest
+        runs-on: ubuntu-23.10
         container: mcr.microsoft.com/playwright:v.1.29.1-focal
         steps:
             - name: checkout repository
