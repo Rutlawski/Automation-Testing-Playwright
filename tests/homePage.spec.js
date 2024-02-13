@@ -1,9 +1,9 @@
-import test, { expect } from "@playwright/test"
-import { Homepage } from "../pages/Homepage"
+import test, { expect } from "@playwright/test";
+import { Homepage } from "../pages/Homepage";
+import { titles } from "../lib/titles";
 
-test.skip("Opens Homepage and verifies URL and Title", async ({page}) => {
+test("Opens homepage and verifies title", async ({page}) => {
     const homepage = new Homepage(page);
-    await homepage.openHomePage();
-    await page.waitForURL("http://localhost:2221/");
-    await expect(page).toHaveTitle("Art Shopping Store");
+    await homepage.openHomepage();
+    await expect(page).toHaveTitle(titles.homepageTitle);
 })

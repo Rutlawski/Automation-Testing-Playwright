@@ -1,67 +1,69 @@
 import { expect } from "@playwright/test";
+import { titles } from "../lib/titles";
 
 export class Homepage{
     constructor(page){
         this.page = page;
-        this.addToBasketButton = page.locator('[data-qa="product-button"]').first();
-        this.addToBasketButtons = page.locator('[data-qa="product-button"]')
-        this.basketHeader = page.locator('[data-qa="header-basket-count"]');
+        this.navigationTabs = page.locator('[data-qa="desktop-nav-link"]');
+        this.productCard = page.locator('[data-qa="product-card"]').first();
+        this.productCards = page.locator('[data-qa="product-card"]');
+        this.productCardTitle = page.locator('[data-qa="product-title"]').first();
+        this.addToCartButton = page.locator('[data-qa="product-button"]').first();
+        this.addToCartButtons = page.locator('[data-qa="product-button"]');
+        this.cartHeader = page.locator('[data-qa="header-basket-count"]');
         this.dropdownElement = page.locator('[data-qa="sort-dropdown"]');
-        this.productTitle = page.locator('[data-qa="product-title"]').first();
-        this.checkoutButton = page.getByRole('link', { name: 'Checkout' });
     }
-    openHomePage = async () => {
-        await this.page.goto("http://localhost:2221/");
+    openHomepage = async () => {
+        await this.page.goto('/');
     }
-    openHomePageandVerify = async () => {
-        await this.page.goto("http://localhost:2221/");
-        await expect(this.page).toHaveTitle("Art Shopping Store");
+    openHomepageAndVerify = async () => {
+        await this.page.goto('/');
+        await expect(this.page).toHaveURL('/');
+        await expect(this.page).toHaveTitle(titles.homepageTitle);
     }
-    getproductTitle = async () => {
-        await this.productTitle.waitFor();
-        return this.productTitle.innerText();
+    clickOnNavigationTab = async (number) => {
+        const specifcNavigationTab = await this.navigationTabs.nth(number);
+        await specifcNavigationTab.waitFor();
+        await specifcNavigationTab.click();
     }
-    setsDropdownValueAsc = async () => {
+    addProductToCart = async () => {
+        await this.productCard.waitFor();
+        await this.addToCartButton.waitFor();
+        await this.addToCartButton.click();
+    }
+    addProductsToCart = async (number) => {
+        const specificAddButton = this.addToCartButtons;
+        await specificAddButton.nth(number).waitFor();
+        const textBeforeAdding = await specificAddButton.nth(number).innerText();
+        const cartHeaderCountBeforeAdding = await this.getHeaderNumber();
+        await specificAddButton.nth(number).click();
+        const textAfterAdding = await specificAddButton.nth(number).innerText();
+        const cartHeaderCountAfterAdding = await this.getHeaderNumber();
+        await expect(cartHeaderCountAfterAdding).toBeGreaterThan(cartHeaderCountBeforeAdding);
+        await expect(textAfterAdding).not.toBe(textBeforeAdding);
+    }
+    setDropdownValueAsc = async () => {
         await this.dropdownElement.waitFor();
         await this.dropdownElement.selectOption("Price ascending");
-        await expect(await this.dropdownElement).toHaveValue("price-asc");
     }
-    setsDefaultDropdownValue = async () => {
-        await this.dropdownElement.waitFor();
-        await this.dropdownElement.selectOption("Popularity (default)");
-        await expect(await this.dropdownElement).toHaveValue("default");
-    }
-    testDropdownValue = async () => {
+    setDropdownAndVerify = async () => {
         await this.dropdownElement.waitFor();
         await this.dropdownElement.selectOption("Price ascending");
-        await expect(await this.dropdownElement).toHaveValue("price-asc");
-        await expect(this.productTitle).toHaveText("Baby Zebra with butterfly");
+        await this.productCard.waitFor();
+        await expect(this.dropdownElement).toHaveValue("price-asc");
+        await expect(this.productCardTitle).toHaveText("Baby Zebra with butterfly");
+        await this.dropdownElement.selectOption("Popularity (default)");
+        await this.productCard.waitFor();
+        await expect(this.dropdownElement).toHaveValue("default");
+        await expect(this.productCardTitle).toHaveText("Astronaut dabbing");        
+    }
+    setDropdownValueDefault = async () => {
         await this.dropdownElement.waitFor();
         await this.dropdownElement.selectOption("Popularity (default)");
-        await expect(await this.dropdownElement).toHaveValue("default");
-        await expect(await this.productTitle).toHaveText("Astronaut dabbing");
     }
-    getBasketCount = async () => {
-        await this.basketHeader.waitFor();
-        const basketHeaderText = await this.basketHeader.innerText();
-        return parseInt(basketHeaderText, 10);
-    }
-    addProductToBasket = async () => {
-        await this.addToBasketButton.waitFor();
-        await this.addToBasketButton.click();
-    }
-    addProductsToBasket = async (number) => {
-        const specificAddButton = await this.addToBasketButtons.nth(number);
-        await this.basketHeader.waitFor();
-        const basketHeaderBefore = await this.getBasketCount();
-        await specificAddButton.waitFor();
-        await specificAddButton.click();
-        const basketHeaderAfter = await this.getBasketCount();
-        await expect(basketHeaderAfter).toBeGreaterThan(basketHeaderBefore);
-    }
-    clickCheckout = async () => {
-        await this.checkoutButton.waitFor();
-        await this.checkoutButton.click();
-        await expect(this.page).toHaveURL(/\/basket/);
+    getHeaderNumber = async () => {
+        await this.cartHeader.waitFor();
+        const cartHeaderText = await this.cartHeader.innerText();
+        return await parseInt(cartHeaderText, 10);
     }
 }
