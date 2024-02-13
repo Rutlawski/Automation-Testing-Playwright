@@ -6,9 +6,7 @@ jobs:
   playwrighttests:
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.29.1-focal
-      env:
-        ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+      image: mcr.microsoft.com/playwright:v1.41.2-focal
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
