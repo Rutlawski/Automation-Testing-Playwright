@@ -11,5 +11,5 @@ test("Remove product from cart and verify cart header", async ({page}) => {
     const headerNumberBefore = await cartPage.getHeaderNumber();
     await cartPage.removeProductFromCart();
     const headerNumberAfter = await cartPage.getHeaderNumber();
-    // await expect(headerNumberAfter).toEqual(headerNumberBefore - 1);
+    // await expect(await headerNumberAfter).toEqual(headerNumberBefore - 1);
 })
