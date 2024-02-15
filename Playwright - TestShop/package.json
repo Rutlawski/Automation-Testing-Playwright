@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "e2e": "playwright test --headed",
-    "npm ci": "playwright test"
+    "e2e": "playwright test",
+    "npm ci": "playwright test",
+    "ui": "playwright test --ui"
   },
   "keywords": [],
   "author": "",

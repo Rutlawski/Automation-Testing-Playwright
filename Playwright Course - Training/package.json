@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "e2e": "playwright test",
+    "ui": "playwright test --ui",
     "test:ci": "playwright test"
   },
   "keywords": [],
