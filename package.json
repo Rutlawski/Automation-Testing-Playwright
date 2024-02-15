@@ -4,22 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "e2e:ci": "playwright test",
-    "e2e": "playwright test --headed"
+    "e2e": "playwright test"
   },
-  "keywords": [
-    "e2e",
-    "automation",
-    "playwright",
-    "javascript"
-  ],
-  "author": "Marek Ostrowski",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.40.1"
+    "@playwright/test": "^1.41.2"
   },
   "dependencies": {
     "node-fetch": "^2.6.7",
-    "uuid": "^9.0.1"
+    "uuid": "^9.0.0"
   }
 }

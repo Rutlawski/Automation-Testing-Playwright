@@ -1,14 +1,17 @@
-import test from "@playwright/test";
-import { v4 as uuidv4 } from 'uuid';
-import { ProductPage } from "../pages/ProductPage";
-import { Register } from "../pages/Register";
+import test, { expect } from "@playwright/test";
+import { v4 as uuid } from "uuid";
+import { Homepage } from "../pages/Homepage";
+import { RegisterPage } from "../pages/RegisterPage";
 
-test.skip("Opens register page and fills in", async ({page}) => {
-    const productPage = new ProductPage(page);
-    const register = new Register(page);
-    const email = uuidv4() + "@gmail.com";
-    const password = uuidv4();
-    await productPage.openHomepage();
-    await productPage.clickMyAccountButton();
-    await register.createNewUser(email, password);
+test("Registers a user and verifies page title", async ({page}) => {
+    const homepage = new Homepage(page);
+    const registerPage = new RegisterPage(page);
+    const email = uuid() + "@gmail.com";
+    const password = uuid();
+    await homepage.openHomepage();
+    await homepage.clickOnNavigationTab(0);
+    await registerPage.clickOnRegisterButton();
+    await registerPage.fillUpCredentialInputs(email, password);
+    await registerPage.clickOnSignUpButton();
+    await expect(page).toHaveURL('/my-account');
 })

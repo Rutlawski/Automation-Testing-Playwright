@@ -1,9 +1,13 @@
-import test, { expect } from "@playwright/test";
-import { ProductPage } from "../pages/ProductPage";
+import test, {expect} from "@playwright/test";
+import { Homepage } from "../pages/Homepage";
 
-test.skip("Verifies if dropdown works", async ({page}) => {
-    const productPage = new ProductPage(page);
-    await productPage.openHomepage();
-    await productPage.selectDropdownValue();
-    await productPage.selectSecondDropdownValue();
+test("Verifies if dropdown works correctly", async ({page}) => {
+    const homepage = new Homepage(page);
+    await homepage.openHomepage();
+    await homepage.setDropdownValueAsc();
+    await expect(homepage.dropdownElement).toHaveValue("price-asc");
+    await expect(homepage.productCardTitle).toHaveText("Baby Zebra with butterfly");
+    await homepage.setDropdownValueDefault();
+    await expect(homepage.dropdownElement).toHaveValue("default");
+    await expect(homepage.productCardTitle).toHaveText("Astronaut dabbing");
 })
